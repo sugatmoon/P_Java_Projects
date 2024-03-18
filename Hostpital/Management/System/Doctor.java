@@ -36,7 +36,7 @@ public class Doctor {
     }
 
     public boolean  getDoctorByID(int id) {
-        String getDoctorByID = "SELECT * FROM DOCTOR WHERE ID = ? ";
+        String getDoctorByID = "SELECT * FROM DOCTOR WHERE ID = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getDoctorByID);
             preparedStatement.setInt(1,id);

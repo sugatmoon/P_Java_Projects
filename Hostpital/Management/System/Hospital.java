@@ -1,8 +1,8 @@
 package Hostpital.Management.System;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.mysql.cj.util.StringInspector;
+
+import java.sql.*;
 import java.util.Scanner;
 
 public class Hospital {
@@ -44,6 +44,7 @@ public class Hospital {
                         doctor.viewDoctor();
                         break;
                     case 4 :
+
                         break;
                     case 5 :
                         break;
@@ -51,6 +52,7 @@ public class Hospital {
                         System.out.println("Enter the Choice: ");
                 }
             }
+
 
 
 
@@ -68,4 +70,62 @@ public class Hospital {
         }
 
     }
+    public static void bookAppointment (Patient patient, Doctor doctor,Scanner scanner,Connection connection){
+        System.out.println("Enter the Patient ID: ");
+        int Patient_Id = scanner.nextInt();
+        System.out.println("Enter the Doctor ID: ");
+        int Doctor_Id = scanner.nextInt();
+        System.out.println("Enter the Date of Appointment: ");
+        String Appointment_Date = scanner.next();
+
+
+        if (patient.getPatientByID(Patient_Id) && doctor.getDoctorByID(Doctor_Id)) {
+            if (checkAvailability(Doctor_Id,Appointment_Date,connection)){
+
+            }
+                try {
+
+                String query = " INSERT INTO appoinments (Patient_id,Doctor_id,Appointment_Date) VALUES (?,?,?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                preparedStatement.setInt(1,Patient_Id);
+                preparedStatement.setInt(2,Doctor_Id);
+                preparedStatement.setString(3,Appointment_Date);
+
+                int value = preparedStatement.executeUpdate();
+                if (value > 0) {
+                    System.out.println("Successfully Appointment Booked....");
+                }
+                else {
+                    System.out.println("Something Went Wrong........");
+                }
+
+
+                }catch (SQLException e ) {
+                    System.out.println(e.getStackTrace());
+                }
+        }else System.out.println("Something Went Wrong........");
+    }
+    public static boolean checkAvailability (int Doctor_ID, String Appointment_Date,Connection connection) {
+        String query = "SELECT COUNT (*) FROM appoinments where Doctor_id = ? , Appoinment_Date = ?";
+        try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1,Doctor_ID);
+        preparedStatement.setString(2,Appointment_Date);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            int count = resultSet.getInt(1);
+            if (count  == 0 ) {
+                    return true;
+            }
+        }
+
+        }catch (SQLException e ) {
+            System.out.println(e);
+        }
+        return false;
+
+    }
+
+
 }
