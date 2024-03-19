@@ -15,18 +15,20 @@ public class Doctor {
         this.connection = connection;
     }
     public void viewDoctor() {
-        String viewQuery = "SELECT * FORM DOCTOR";
+        String viewQuery = "SELECT * FROM doctor";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(viewQuery);
             ResultSet result = preparedStatement.executeQuery();
+                System.out.println("+---------------------------------------------+");
+                System.out.println("|    ID    |     NAME     |   SPECIALIZATION  |");
+                System.out.println("+---------------------------------------------+");
             while (result.next()) {
-                int id = result.getInt("ID");
-                String name = result.getString("NAME");
-                String speacialization = result.getString("SPEACIALIZATION");
-
-
-                System.out.println(result.getRow());
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                String speacialization = result.getString("speacialization");
+                System.out.printf("|   %-7s|    %-7s|      %-5s|\n",id,name,speacialization);
+                System.out.println("+---------------------------------------------+");
             }
 
 
@@ -36,7 +38,7 @@ public class Doctor {
     }
 
     public boolean  getDoctorByID(int id) {
-        String getDoctorByID = "SELECT * FROM DOCTOR WHERE ID = ?";
+        String getDoctorByID = "SELECT * FROM doctor WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getDoctorByID);
             preparedStatement.setInt(1,id);

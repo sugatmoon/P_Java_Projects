@@ -19,16 +19,16 @@ public class Patient
         String name = scanner.next();
         System.out.print("Age: ");
         int age     = scanner.nextInt();
-        System.out.print("Sex: ");
-        String sex  = scanner.next();
+        System.out.print("Gender: ");
+        String gender  = scanner.next();
 
 
-        String insertQuery = "INSERT INTO PATIENT(name,sex,age) VALUES (?,?,?)";
+        String insertQuery = "INSERT INTO patient(name,age,gender) VALUES (?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setString(1,name);
-            preparedStatement.setString(2,sex);
-            preparedStatement.setInt(3,age);
+            preparedStatement.setInt(2,age);
+            preparedStatement.setString(3,gender);
             int result = preparedStatement.executeUpdate();
             if (result > 0 )
                 System.out.println("Patient is Added...........");
@@ -40,33 +40,31 @@ public class Patient
         }
     }
     public void viewPatient() {
-        String viewQuery = "SELECT * FORM PATIENT";
-
-
-
+        String viewQuery = "SELECT * FROM patient";
 
 
         try {
         PreparedStatement preparedStatement = connection.prepareStatement(viewQuery);
         ResultSet result = preparedStatement.executeQuery();
+            System.out.println("+---------------------------------------------+");
+            System.out.println("|    ID   |     NAME     |   AGE   |  GENDER  |");
+            System.out.println("+---------------------------------------------+");
         while (result.next()) {
             int id = result.getInt("ID");
-            int age = result.getInt("AGE");
             String name = result.getString("NAME");
-            String sex = result.getString("SEX");
-
-
-            System.out.println(result.getRow());
+            int age = result.getInt("AGE");
+            String gender = result.getString("gender");
+            System.out.printf("|    %-5s|   %-11s|   %-6s|   %-7s|\n",id,name,age,gender);
+            System.out.println("+---------------------------------------------+");
         }
 
-
         }catch (SQLException e ) {
-            System.out.println(e.getStackTrace());
+            System.out.println(e);
         }
     }
 
     public boolean  getPatientByID(int id) {
-        String getPatientByID = "SELECT * FROM PATIENT WHERE ID = ? ";
+        String getPatientByID = "SELECT * FROM patient WHERE ID = ? ";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getPatientByID);
             preparedStatement.setInt(1,id);
@@ -74,7 +72,7 @@ public class Patient
 //            int ID = resultSet.getInt("id");
 //            int AGE = resultSet.getInt("age");
 //            String NAME = resultSet.getString("name");
-//            String SEX = resultSet.getString("sex");
+//            String gender = resultSet.getString("gender");
             if (resultSet.next())
                 return  true;
 

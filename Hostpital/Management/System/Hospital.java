@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Hospital {
     private static final String url = "jdbc:mysql://localhost:3306/hospital";
     private static final String user = "root";
-    private static final String password = "Sugat@2002";
+    private static final String password = "Pass@123";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         try {
@@ -44,7 +44,7 @@ public class Hospital {
                         doctor.viewDoctor();
                         break;
                     case 4 :
-
+                        bookAppointment(patient, doctor,scanner,connection);
                         break;
                     case 5 :
                         break;
@@ -85,7 +85,7 @@ public class Hospital {
             }
                 try {
 
-                String query = " INSERT INTO appoinments (Patient_id,Doctor_id,Appointment_Date) VALUES (?,?,?)";
+                String query = " INSERT INTO appointment (patient_id,doctor_id,appointment_date) VALUES (?,?,?)";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
 
                 preparedStatement.setInt(1,Patient_Id);
@@ -107,7 +107,7 @@ public class Hospital {
         }else System.out.println("Something Went Wrong........");
     }
     public static boolean checkAvailability (int Doctor_ID, String Appointment_Date,Connection connection) {
-        String query = "SELECT COUNT (*) FROM appoinments where Doctor_id = ? , Appoinment_Date = ?";
+        String query = "SELECT count(id) FROM appointment where doctor_id = ? and appointment_date = ?";
         try {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setInt(1,Doctor_ID);
