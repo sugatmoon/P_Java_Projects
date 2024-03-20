@@ -46,16 +46,16 @@ public class Patient
         try {
         PreparedStatement preparedStatement = connection.prepareStatement(viewQuery);
         ResultSet result = preparedStatement.executeQuery();
-            System.out.println("+---------------------------------------------+");
+            System.out.println("+----------------------------------------------+");
             System.out.println("|    ID   |     NAME     |   AGE   |  GENDER  |");
-            System.out.println("+---------------------------------------------+");
+            System.out.println("+----------------------------------------------+");
         while (result.next()) {
             int id = result.getInt("ID");
             String name = result.getString("NAME");
             int age = result.getInt("AGE");
             String gender = result.getString("gender");
-            System.out.printf("|    %-5s|   %-11s|   %-6s|   %-7s|\n",id,name,age,gender);
-            System.out.println("+---------------------------------------------+");
+            System.out.printf("|%-10s|%-14s|%-9s|%-10s|\n",id,name,age,gender);
+            System.out.println("+----------------------------------------------+");
         }
 
         }catch (SQLException e ) {
@@ -64,15 +64,12 @@ public class Patient
     }
 
     public boolean  getPatientByID(int id) {
-        String getPatientByID = "SELECT * FROM patient WHERE ID = ? ";
+        String getPatientByID = "SELECT * FROM patient WHERE id = ? ";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getPatientByID);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-//            int ID = resultSet.getInt("id");
-//            int AGE = resultSet.getInt("age");
-//            String NAME = resultSet.getString("name");
-//            String gender = resultSet.getString("gender");
+//
             if (resultSet.next())
                 return  true;
 
