@@ -9,6 +9,9 @@ public class Hospital {
     private static final String url = "jdbc:mysql://localhost:3306/hospital";
     private static final String user = "root";
     private static final String password = "Pass@123";
+    private static int x = 1;
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         try {
@@ -24,6 +27,10 @@ public class Hospital {
 
 
             while (true) {
+                if (x == 0) {
+                    System.out.println("Successfully exit//");
+                    break;
+                }
                 System.out.println("1. Add Patient");
                 System.out.println("2. View Patient");
                 System.out.println("3. View Doctors");
@@ -47,9 +54,9 @@ public class Hospital {
                         bookAppointment(patient, doctor,scanner,connection);
                         break;
                     case 5 :
-                        break;
+                        x = 0;
                     default:
-                        System.out.println("Enter the Choice: ");
+                        System.out.println("Something went wrong............");
                 }
             }
 
