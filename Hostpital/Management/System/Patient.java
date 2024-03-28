@@ -69,7 +69,6 @@ public class Patient
             PreparedStatement preparedStatement = connection.prepareStatement(getPatientByID);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-//
             if (resultSet.next())
                 return  true;
 

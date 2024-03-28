@@ -39,14 +39,11 @@ public class Doctor {
 
     public boolean  getDoctorByID(int id) {
         String getDoctorByID = "SELECT * FROM doctor WHERE id = ?";
-        try {
+        try{
             PreparedStatement preparedStatement = connection.prepareStatement(getDoctorByID);
             preparedStatement.setInt(1,id);
             ResultSet resultSet = preparedStatement.executeQuery();
-//            int ID = resultSet.getInt("id");
-//            int AGE = resultSet.getInt("age");
-//            String NAME = resultSet.getString("name");
-//            String SEX = resultSet.getString("sex");
+
             if (resultSet.next())
                 return  true;
 

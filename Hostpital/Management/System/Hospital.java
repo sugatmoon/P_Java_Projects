@@ -1,7 +1,4 @@
 package Hostpital.Management.System;
-
-import com.mysql.cj.util.StringInspector;
-
 import java.sql.*;
 import java.util.Scanner;
 
@@ -59,16 +56,6 @@ public class Hospital {
                         System.out.println("Something went wrong............");
                 }
             }
-
-
-
-
-
-
-
-
-
-
         }catch (ClassNotFoundException e ) {
             System.out.println(e.getMessage());
         }
@@ -92,22 +79,19 @@ public class Hospital {
             }
                 try {
 
-                String query = " INSERT INTO appointment (patient_id,doctor_id,appointment_date) VALUES (?,?,?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        String query = " INSERT INTO appointment (patient_id,doctor_id,appointment_date) VALUES (?,?,?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-                preparedStatement.setInt(1,Patient_Id);
-                preparedStatement.setInt(2,Doctor_Id);
-                preparedStatement.setString(3,Appointment_Date);
+                        preparedStatement.setInt(1,Patient_Id);
+                        preparedStatement.setInt(2,Doctor_Id);
+                        preparedStatement.setString(3,Appointment_Date);
 
-                int value = preparedStatement.executeUpdate();
-                if (value > 0) {
-                    System.out.println("Successfully Appointment Booked....");
-                }
-                else {
-                    System.out.println("Something Went Wrong........");
-                }
-
-
+                        int value = preparedStatement.executeUpdate();
+                        if (value > 0) {
+                            System.out.println("Successfully Appointment Booked....");
+                            }else {
+                                System.out.println("Something Went Wrong........");
+                            }
                 }catch (SQLException e ) {
                     System.out.println(e.getStackTrace());
                 }
@@ -126,7 +110,6 @@ public class Hospital {
                     return true;
             }
         }
-
         }catch (SQLException e ) {
             System.out.println(e);
         }
